@@ -16,3 +16,12 @@ export const LoginService = (credentials) => {
     .then((data) => data)
     .catch((error) => error);
 };
+
+export const EmailConfirmationService = (credential) => {
+  const http = new HttpService();
+  const emailConfirmUrl = "verify-account/"+credential;
+  return http
+    .getData(emailConfirmUrl)
+    .then((data) => data)
+    .catch((error) => console.log(error));
+};

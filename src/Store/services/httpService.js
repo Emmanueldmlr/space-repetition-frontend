@@ -13,5 +13,15 @@ class HttpService {
       .then((res) => res)
       .catch((error) => error.response.data);
   };
+
+  getData = async (url) => {
+    return axios({
+      method: "get",
+      url: baseUrl + url,
+      requestOption,
+    })
+      .then((res) => res)
+      .catch((error) => error.response.data);
+  };
 }
 export default HttpService;

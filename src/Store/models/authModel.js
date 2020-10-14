@@ -1,5 +1,5 @@
 import { action, thunk } from "easy-peasy";
-import {LoginService, RegisterService} from '../services/authService'
+import {LoginService, RegisterService, EmailConfirmationService} from '../services/authService'
 import {item} from '../configs/index'
 
 const authModel = {
@@ -69,13 +69,44 @@ const authModel = {
     })
   }),
 
+  confirmEmail: thunk((Actions, token) => {
+    Actions.toggleIsLoading();
+    if (token ===''){
+        const payload = {
+          type: "error",
+          msg: "Invalid Token",
+        };
+        Actions.updateRequestResponse(payload);
+        Actions.toggleIsLoading();
+        return
+    }
+    EmailConfirmationService(token)
+    .then((data) =>{
+        if (data.status) {
+          const payload = {
+            type: "success",
+            msg: data.data.message,
+          };
+          Actions.updateRequestResponse(payload);
+          Actions.toggleIsLoading();
+        }
+         else {
+          const payload = {
+            type: "error",
+            msg: data.error,
+          };
+          Actions.updateRequestResponse(payload);
+          Actions.toggleIsLoading();
+        }
+    })
+  }),
+
   //actions
   toggleIsLoading: action((state) => {
     state.isLoading = !state.isLoading;
   }),
 
   updateRequestResponse: action((state, payload) => {
-    console.log(payload);
     state.requestResponse = payload;
   }),
 
