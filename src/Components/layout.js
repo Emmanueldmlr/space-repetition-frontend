@@ -2,9 +2,19 @@ import React from 'react'
 import { Layout } from "antd";
 import FooterLayout from "./footer";
 import SideNav from "./sideNav";
+import {sessionItem} from '../Store/configs/index'
 const { Header, Content} = Layout;
 
 const Extend = (props) =>{
+    const user = JSON.parse(sessionStorage.getItem(sessionItem));
+    if(!user){
+      props.children.props.history.push('/login')
+    }
+    else{
+      if(user.isVerified !== 1){
+        props.children.props.history.push('/account-verification')
+      }
+    }
     return (
       <Layout>
         <SideNav/>

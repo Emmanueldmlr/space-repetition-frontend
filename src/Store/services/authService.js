@@ -23,5 +23,14 @@ export const EmailConfirmationService = (credential) => {
   return http
     .getData(emailConfirmUrl)
     .then((data) => data)
-    .catch((error) => console.log(error));
+    .catch((error) => error);
+};
+
+export const ResendEmailService = (credential) => {
+  const http = new HttpService();
+  const resendEmailUrl = "account-request-verification/"+credential;
+  return http
+    .getData(resendEmailUrl)
+    .then((data) => data)
+    .catch((error) => error);
 };

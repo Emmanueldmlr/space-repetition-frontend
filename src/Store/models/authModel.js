@@ -1,9 +1,8 @@
 import { action, thunk } from "easy-peasy";
-import {LoginService, RegisterService, EmailConfirmationService} from '../services/authService'
-import {item} from '../configs/index'
+import {LoginService, RegisterService, EmailConfirmationService, ResendEmailService} from '../services/authService'
+import {item,sessionItem} from '../configs/index'
 
 const authModel = {
-  user: null,
   requestResponse: null,
   isLoading: false,
   isAuthed: true,
@@ -14,16 +13,20 @@ const authModel = {
       .then((data) => {
         if (data.status) {
           localStorage.setItem(item,data.data.token)
+          sessionStorage.setItem(sessionItem,JSON.stringify(data.data.user))
           const newPayload = {
             type: "success",
             msg: data.data.message,
           };
           Actions.updateRequestResponse(newPayload)
-          Actions.loginSuccess(data)
+          Actions.loginSuccess()
           Actions.toggleIsLoading();  
-          console.log("its here") 
-          loginData.history.push("/") 
-           
+          if(data.data.user.isVerified === 0){
+            loginData.history.push("/account-verification") 
+          }else{
+            loginData.history.push("/") 
+          }
+                
         }
          else {
             const payload = {
@@ -100,6 +103,37 @@ const authModel = {
         }
     })
   }),
+  resendToken: thunk((Actions, token) => {
+    Actions.toggleIsLoading();
+    if (token ===''){
+        const payload = {
+          type: "error",
+          msg: "Invalid Token",
+        };
+        Actions.updateRequestResponse(payload);
+        Actions.toggleIsLoading();
+        return
+    }
+    ResendEmailService(token)
+    .then((data) =>{
+        if (data.status) {
+          const payload = {
+            type: "success",
+            msg: data.data.message,
+          };
+          Actions.updateRequestResponse(payload);
+          Actions.toggleIsLoading();
+        }
+         else {
+          const payload = {
+            type: "error",
+            msg: data.error,
+          };
+          Actions.updateRequestResponse(payload);
+          Actions.toggleIsLoading();
+        }
+    })
+  }),
 
   //actions
   toggleIsLoading: action((state) => {
@@ -114,8 +148,7 @@ const authModel = {
     state.requestResponse = null;
   }),
 
-  loginSuccess: action((state,payload)=> {
-      state.user = payload.user;
+  loginSuccess: action((state)=> {
       state.isAuthed = true;
   })
 };

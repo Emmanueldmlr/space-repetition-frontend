@@ -9,7 +9,7 @@ function EmailConfirm(props) {
     const { match: { params } } =props;
     useEffect(() => {
         confirmEmail(params.token)
-    }, [])
+    }, []);
     return (
         <>
             {
