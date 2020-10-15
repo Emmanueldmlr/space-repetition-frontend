@@ -34,3 +34,21 @@ export const ResendEmailService = (credential) => {
     .then((data) => data)
     .catch((error) => error);
 };
+
+export const ForgotPasswordService = (credential) => {
+  const http = new HttpService();
+  const changePasswordUrl = "forgot-password";
+  return http
+    .postData(credential,changePasswordUrl)
+    .then((data) => data)
+    .catch((error) => error);
+};
+
+export const ChangePasswordService = (credential) => {
+  const http = new HttpService();
+  const changePasswordUrl = "change-password";
+  return http
+    .postData(credential,changePasswordUrl)
+    .then((data) => data)
+    .catch((error) => error);
+};

@@ -104,22 +104,9 @@ const Login = (props) => {
               <div className="text-center">
                 Dont have an account? <Link to="/register">Register here</Link>.
               </div>
-              {/* <div className="text-center">
-                {
-                    requestResponse !== null ?
-                        requestResponse.type === 'success' ?
-                            <p style={{ fontSize: "15px", color: "green" }}>
-                                { requestResponse.msg}
-                            </p>
-                        :
-                            <p style={{ fontSize: "15px", color: "red" }}>
-                                { requestResponse.msg}
-                            </p>
-                    :
-                    null
-                }
-                
-              </div> */}
+              <div className="text-center">
+               <Link to="/forgot-password">Forgot Password?</Link>.
+              </div>
             </div>
           </div>
         </div>

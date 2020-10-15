@@ -8,6 +8,8 @@ import Register from "./Pages/Auth/register.js";
 import NotFound from "./Pages/Others/404page";
 import AccountVerification from "./Pages/Others/accountVerification";
 import EmailConfirm from "./Pages/Others/emailConfirm";
+import ForgotPassword from "./Pages/Auth/forgotPassword";
+import ChangePassword from "./Pages/Auth/changePassword";
 import EmailInfo from "./Pages/Others/emailInfo";
 import Homepage from "./Pages/Protected/homepage";
 import CreateTodo from "./Pages/Protected/createTodo";
@@ -27,6 +29,8 @@ const App = () => {
         <Guest exact path="/registration-success-notification" component={EmailInfo} />
         <Guest exact path="/account-verification" component={AccountVerification} />
         <Guest exact path="/confirm-email/:token" component={EmailConfirm} />
+        <Guest exact path="/forgot-password" component={ForgotPassword} />
+        <Guest exact path="/verify-user-email/:token" component={ChangePassword} />
         <Guest  component={NotFound}/>
       </Switch>
     </Router>

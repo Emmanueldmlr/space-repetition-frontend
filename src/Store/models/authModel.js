@@ -1,5 +1,8 @@
 import { action, thunk } from "easy-peasy";
-import {LoginService, RegisterService, EmailConfirmationService, ResendEmailService} from '../services/authService'
+import {LoginService, RegisterService, 
+        EmailConfirmationService, ResendEmailService,
+        ForgotPasswordService, ChangePasswordService
+} from '../services/authService'
 import {item,sessionItem} from '../configs/index'
 
 const authModel = {
@@ -125,6 +128,71 @@ const authModel = {
           Actions.toggleIsLoading();
         }
          else {
+          const payload = {
+            type: "error",
+            msg: data.error,
+          };
+          Actions.updateRequestResponse(payload);
+          Actions.toggleIsLoading();
+        }
+    })
+  }),
+  forgotPassword: thunk((Actions, forgotData) => {
+    Actions.toggleIsLoading();
+    if (forgotData.data.email ===''){
+        const payload = {
+          type: "error",
+          msg: "Email Field Must be Filled",
+        };
+        Actions.updateRequestResponse(payload);
+        Actions.toggleIsLoading();
+        return
+    }
+    ForgotPasswordService(forgotData.data)
+    .then((data) =>{
+        if (data.status) {
+          console.log(data)
+          const payload = {
+            type: "success",
+            msg: data.data.message,
+          };
+          Actions.updateRequestResponse(payload);
+          Actions.toggleIsLoading();
+        }
+         else {
+          const payload = {
+            type: "error",
+            msg: data.error,
+          };
+          Actions.updateRequestResponse(payload);
+          Actions.toggleIsLoading();
+        }
+    })
+  }),
+
+  changePassword: thunk((Actions, changePasswordData) => {
+    Actions.toggleIsLoading();
+    if (changePasswordData.data.password ==='' || changePasswordData.data.password !== changePasswordData.data.confirmPassword || changePasswordData.data.token ===''){
+        const payload = {
+          type: "error",
+          msg: "Kindly Ensure all Fields are Correctly Filled",
+        };
+        Actions.updateRequestResponse(payload);
+        Actions.toggleIsLoading();
+        return
+    }
+    ChangePasswordService(changePasswordData.data)
+    .then((data) =>{
+        if (data.status) {
+          const payload = {
+            type: "success",
+            msg: data.data.message,
+          };
+          Actions.updateRequestResponse(payload);
+          Actions.toggleIsLoading();
+          changePasswordData.history.push('/login')
+        }
+        else {
           const payload = {
             type: "error",
             msg: data.error,
