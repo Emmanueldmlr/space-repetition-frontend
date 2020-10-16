@@ -1,11 +1,13 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Layout } from "antd";
 import FooterLayout from "./footer";
 import SideNav from "./sideNav";
 import {sessionItem} from '../Store/configs/index'
+import {useStoreActions} from 'easy-peasy'
 const { Header, Content} = Layout;
 
 const Extend = (props) =>{
+    const {fetchTodos}  = useStoreActions(Actions => Actions.todo);
     const user = JSON.parse(sessionStorage.getItem(sessionItem));
     if(!user){
       props.children.props.history.push('/login')
@@ -15,6 +17,9 @@ const Extend = (props) =>{
         props.children.props.history.push('/account-verification')
       }
     }
+    useEffect(() => {
+      fetchTodos()
+    }, [])
     return (
       <Layout>
         <SideNav/>

@@ -7,12 +7,17 @@ import {
   HomeOutlined,
   CheckCircleTwoTone,
 } from "@ant-design/icons";
+import {useStoreActions} from 'easy-peasy'
 import {Link} from 'react-router-dom'
 
 const {Sider } = Layout;
 const {SubMenu } = Menu;
 
-function SideNav() {
+const SideNav = (props) => {
+    const {logout} = useStoreActions(Actions => Actions.auth);
+    const Logout = () => {
+        logout()
+    }
     return (
       <Sider
         breakpoint="lg"
@@ -73,7 +78,7 @@ function SideNav() {
               <Menu.Item key="8">Middleware</Menu.Item>
             </SubMenu>
           </SubMenu>
-          <Menu.Item key="4" icon={<PoweroffOutlined />}>
+          <Menu.Item onClick={Logout} key="4" icon={<PoweroffOutlined />}>
             Logout
           </Menu.Item>
         </Menu>

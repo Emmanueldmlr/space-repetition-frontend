@@ -21,7 +21,7 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <User exact path="/" isAuthed={isAuth} component={Homepage} />
+        <User exact path="/homepage" isAuthed={isAuth} component={Homepage} />
         <User exact path="/create-todo" isAuthed={isAuth} component={CreateTodo} />
         <User exact path="/view-todo/:id" isAuthed={isAuth} component={Todo} />
         <Guest exact path="/login" component={Login} />

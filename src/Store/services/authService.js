@@ -52,3 +52,11 @@ export const ChangePasswordService = (credential) => {
     .then((data) => data)
     .catch((error) => error);
 };
+export const LogoutService = () => {
+  const http = new HttpService();
+  const logoutUrl = "logout";
+  return http
+    .getData(logoutUrl)
+    .then((data) => data)
+    .catch((error) => error);
+};

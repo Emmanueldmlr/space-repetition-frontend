@@ -143,3 +143,8 @@ code {
   padding-left: 45%;
   margin-top: 10%;
 }
+.content-centralize{
+  margin: auto;
+  width: 50%;
+  margin-top: 10%;
+}

@@ -1,7 +1,7 @@
 import { action, thunk } from "easy-peasy";
 import {LoginService, RegisterService, 
         EmailConfirmationService, ResendEmailService,
-        ForgotPasswordService, ChangePasswordService
+        ForgotPasswordService, ChangePasswordService, LogoutService
 } from '../services/authService'
 import {item,sessionItem} from '../configs/index'
 
@@ -27,9 +27,35 @@ const authModel = {
           if(data.data.user.isVerified === 0){
             loginData.history.push("/account-verification") 
           }else{
-            loginData.history.push("/") 
+            loginData.history.push("/homepage") 
           }
                 
+        }
+         else {
+            const payload = {
+                type: 'error',
+                msg:data.error
+            }
+            Actions.updateRequestResponse(payload);
+            Actions.toggleIsLoading();
+        }
+      })
+  }),
+
+  logout: thunk((Actions) => {
+    Actions.toggleIsLoading();
+    LogoutService()
+      .then((data) => {
+        if (data.status) {
+          localStorage.removeItem(item)
+          sessionStorage.removeItem(sessionItem)
+          const newPayload = {
+            type: "success",
+            msg: data.data.message,
+          };
+          Actions.updateRequestResponse(newPayload)
+          Actions.logoutSuccess()
+          Actions.toggleIsLoading();          
         }
          else {
             const payload = {
@@ -218,6 +244,9 @@ const authModel = {
 
   loginSuccess: action((state)=> {
       state.isAuthed = true;
+  }),
+  logoutSuccess: action((state)=> {
+      state.isAuthed = false;
   })
 };
 

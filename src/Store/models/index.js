@@ -3,7 +3,7 @@ import authModel from './authModel'
 import { createStore } from 'easy-peasy'
 
 const storeModel = {
-    todos: todoModel,
+    todo: todoModel,
     auth : authModel
 };
 
