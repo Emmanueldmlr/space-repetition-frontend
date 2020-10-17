@@ -1,11 +1,11 @@
 import { action, thunk } from "easy-peasy";
-import {FetchTodoService, 
+import {FetchTodoService, UpdateTodoService, DeleteTodoService, CreateTodoService
 } from '../services/todoService'
 import {item,sessionItem} from '../configs/index'
 const todoModel = {
     todos:[],
     isLoading: false,
-    requestResponse:"",
+    requestResponse:null,
 
     fetchTodos: thunk((Actions, nill,helpers) => {
         const authActions = helpers.getStoreActions(Action => Action)
@@ -15,14 +15,130 @@ const todoModel = {
             if(data.status === 200){
                 Actions.fetchSuccess(data.data.todos)
                 Actions.toggleIsLoading(); 
+                return
             }
-            if(data.status === 401){
+            else if(data.status === 401){
                 localStorage.removeItem(item)
                 sessionStorage.removeItem(sessionItem)
                 authActions.auth.logout()
+                return
+            }
+            else{
+                const payload = {
+                type: "error",
+                msg: data.error,
+                };
+                Actions.updateRequestResponse(payload);
+                Actions.toggleIsLoading(); 
             }
           })
       }),
+
+    updateTodos: thunk((Actions, payload,helpers) => {
+        const authActions = helpers.getStoreActions(Action => Action)
+        Actions.toggleIsLoading();
+        UpdateTodoService(payload)
+          .then((data) => {
+            if(data.status === 200){
+                Actions.fetchSuccess(data.data.todo)
+                Actions.toggleIsLoading(); 
+                return
+            }
+            else if(data.status === 401){
+                localStorage.removeItem(item)
+                sessionStorage.removeItem(sessionItem)
+                authActions.auth.logout()
+                return
+            }
+            else{
+                const payload = {
+                type: "error",
+                msg: data.error,
+                };
+                Actions.updateRequestResponse(payload);
+                Actions.toggleIsLoading(); 
+            }
+          })
+      }),
+
+    deleteTodo: thunk((Actions, id,helpers) => {
+        const authActions = helpers.getStoreActions(Action => Action)
+        Actions.toggleIsLoading();
+        DeleteTodoService(id)
+          .then((data) => {
+            if(data.status === 200){
+                Actions.fetchSuccess(data.data.todo)
+                Actions.toggleIsLoading(); 
+            
+            }
+            else if(data.status === 401){
+                localStorage.removeItem(item)
+                sessionStorage.removeItem(sessionItem)
+                authActions.auth.logout()
+            
+            }
+            else{
+                const payload = {
+                type: "error",
+                msg: data.error,
+                };
+                Actions.updateRequestResponse(payload);
+                Actions.toggleIsLoading(); 
+            }
+          })
+      }),
+
+    addTodo: thunk((Actions, formData,helpers) => {
+        Actions.toggleIsLoading();
+        const authActions = helpers.getStoreActions(Action => Action)
+        if(formData.title ===''){
+            const payload = {
+                type: "error",
+                msg: "Title Field is Required",
+            };
+            Actions.updateRequestResponse(payload);
+            Actions.toggleIsLoading();
+            return
+        }
+        if(formData.subTodo.length < 1){
+            const payload = {
+                type: "error",
+                msg: "You need at Least One Todo to Submit Form",
+            };
+            Actions.updateRequestResponse(payload);
+            Actions.toggleIsLoading();
+            return
+        }
+
+        CreateTodoService(formData)
+          .then((data) => {
+            if(data.status === 200){
+                Actions.fetchSuccess(data.data.todo)
+                const payload = {
+                    type: "success",
+                    msg: data.data.message,
+                };
+                Actions.updateRequestResponse(payload);
+                Actions.toggleIsLoading(); 
+             
+            }
+            else if(data.status === 401){
+                localStorage.removeItem(item)
+                sessionStorage.removeItem(sessionItem)
+                authActions.auth.logout()
+               
+            }
+            else{
+                const payload = {
+                type: "error",
+                msg: data.error,
+                };
+                Actions.updateRequestResponse(payload);
+                Actions.toggleIsLoading(); 
+            }
+        })
+      }),
+   
 
         //actions
     toggleIsLoading: action((state) => {

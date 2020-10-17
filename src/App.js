@@ -23,7 +23,7 @@ const App = () => {
       <Switch>
         <User exact path="/homepage" isAuthed={isAuth} component={Homepage} />
         <User exact path="/create-todo" isAuthed={isAuth} component={CreateTodo} />
-        <User exact path="/view-todo/:id" isAuthed={isAuth} component={Todo} />
+        <User exact path="/view-todo/:todo"  isAuthed={isAuth} component={Todo} />
         <Guest exact path="/login" component={Login} />
         <Guest exact path="/register" component={Register} />
         <Guest exact path="/registration-success-notification" component={EmailInfo} />
