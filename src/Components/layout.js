@@ -11,11 +11,8 @@ const Extend = (props) =>{
     const user = JSON.parse(sessionStorage.getItem(sessionItem));
     if(!user){
       props.children.props.history.push('/login')
-    }
-    else{
-      if(user.isVerified !== 1){
+    } else if (!user.isVerified) {
         props.children.props.history.push('/account-verification')
-      }
     }
     useEffect(() => {
       fetchTodos()

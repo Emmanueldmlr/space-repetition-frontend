@@ -24,7 +24,7 @@ const authModel = {
           Actions.updateRequestResponse(newPayload)
           Actions.loginSuccess()
           Actions.toggleIsLoading();  
-          if(data.data.user.isVerified === 0){
+          if(!data.data.user.isVerified){
             loginData.history.push("/account-verification") 
           }else{
             loginData.history.push("/homepage") 
