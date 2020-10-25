@@ -12,7 +12,7 @@ const authModel = {
 
   login: thunk((Actions, loginData) => {
     Actions.toggleIsLoading();
-    LoginService(loginData.data)
+   return LoginService(loginData.data)
       .then((data) => {
         if (data.status) {
           localStorage.setItem(item,data.data.token)
@@ -28,8 +28,7 @@ const authModel = {
             loginData.history.push("/account-verification") 
           }else{
             loginData.history.push("/homepage") 
-          }
-                
+          }         
         }
          else {
             const payload = {
@@ -230,7 +229,7 @@ const authModel = {
   }),
 
   //actions
-  toggleIsLoading: action((state) => {
+  toggleIsLoading : action((state) => {
     state.isLoading = !state.isLoading;
   }),
 

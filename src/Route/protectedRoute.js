@@ -4,10 +4,14 @@ import Extend from '../Components/layout'
 import {token} from '../Store/configs/index'
 import Loader from '../Components/loader'
 
+async function getToken (){
+  const key = await token;
+  return key
+}
 const User = ({isAuthed, component:Component, ...rest }) => (
-    
+
     <Route {...rest} render={ props => (
-      token && isAuthed  ? (
+      getToken() && isAuthed  ? (
         <Loader>
             <Extend>
                 <Component {...props} />

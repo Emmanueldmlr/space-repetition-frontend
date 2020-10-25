@@ -14,7 +14,6 @@ class HttpService {
 
   postData = async (payload,url) => {
     const AuthStr = 'Bearer '.concat(localStorage.getItem(item)); 
-    console.log(AuthStr)
     return axios.post(baseUrl + url, payload, { headers: { Authorization: AuthStr } })
     .then((res) => res)
     .catch((error) => error.response.data);

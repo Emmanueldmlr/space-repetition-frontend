@@ -12,7 +12,6 @@ const Todo = (props) => {
     props.children.props.history.push('/login')
   }
   const todo = props;
-  console.log(todo)
   const actions = [
     <Tooltip key="comment-basic-dislike" title="Pending">
       <p>(Pending) </p>
