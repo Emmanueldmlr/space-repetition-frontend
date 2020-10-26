@@ -148,3 +148,6 @@ code {
   width: 50%;
   margin-top: 10%;
 }
+.ant-tree .ant-tree-treenode{
+	padding: 0 0 20px 0 !important;
+}

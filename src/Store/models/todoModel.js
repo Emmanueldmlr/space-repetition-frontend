@@ -4,6 +4,19 @@ import {FetchTodoService, UpdateTodoService, DeleteTodoService, CreateTodoServic
 import {item,sessionItem} from '../configs/index'
 const todoModel = {
     todos:[],
+    cards: [
+        {   key: 1,
+            title: "Learn Hooks",
+            body: "Hooks are used in a functional components and work just like the life cycle methods in a class component",
+            tags: [ 'React', 'Hooks']
+        },
+        {
+            key: 2,
+            title: "Learn PHP",
+            body: "PHP is a backend language for web",
+            tags: [ 'PHP', 'Backend']
+        }
+    ],
     isLoading: false,
     requestResponse:null,
 

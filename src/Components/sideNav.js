@@ -1,11 +1,13 @@
 import React from 'react'
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Button, Tree } from "antd";
 import {
   EyeOutlined,
   PoweroffOutlined,
   PlusOutlined,
   HomeOutlined,
   CheckCircleTwoTone,
+  DownOutlined,
+  FileOutlined
 } from "@ant-design/icons";
 import {useStoreActions, useStoreState} from 'easy-peasy'
 import {Link} from 'react-router-dom'
@@ -15,10 +17,26 @@ const {SubMenu } = Menu;
 
 const SideNav = (props) => {
     const {logout} = useStoreActions(Actions => Actions.auth);
-    const {todos} = useStoreState(State => State.todo)
+    const {todos,cards} = useStoreState(State => State.todo)
     const Logout = () => {
         logout()
     }
+    const onSelect = (selectedKeys, info) => {
+      console.log('selected', selectedKeys, info);
+    };
+    const data = cards.map(card => (
+      {
+        title: card.title,
+        key: card.key,
+        children: [
+          {
+            title: 'No Pages Inside',
+            key: '0-0-0-0',
+          },
+        ],
+      }
+    ))
+    console.log(data)
     return (
       <Sider
         breakpoint="lg"
@@ -73,12 +91,24 @@ const SideNav = (props) => {
               }
               
           </SubMenu>
+          <Tree
+          style={{marginLeft:20, marginTop:10, marginBottom:3}}
+        showLine
+        switcherIcon={<DownOutlined />}
+        defaultExpandedKeys={['0-0-0']}
+        onSelect={onSelect}
+        treeData={data}
+      />
           <Menu.Item onClick={Logout} key="4" icon={<PoweroffOutlined />}>
             Logout
           </Menu.Item>
+          <Button type="dashed" block style={{position:'absolute', left:0, bottom:0}}>
+            <span  style={{marginLeft:"-70px"}}><PlusOutlined /> Add Page</span>
+          </Button>          
         </Menu>
       </Sider>
     );
 }
+
 
 export default SideNav
