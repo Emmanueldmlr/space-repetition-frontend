@@ -12,6 +12,10 @@ const Todo = (props) => {
     props.children.props.history.push('/login')
   }
   const todo = props;
+<<<<<<< HEAD
+=======
+  console.log(todo)
+>>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
   const actions = [
     <Tooltip key="comment-basic-dislike" title="Pending">
       <p>(Pending) </p>

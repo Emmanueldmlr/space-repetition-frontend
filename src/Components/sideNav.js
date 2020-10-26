@@ -1,13 +1,20 @@
 import React from 'react'
+<<<<<<< HEAD
 import { Layout, Menu, Button, Tree } from "antd";
+=======
+import { Layout, Menu } from "antd";
+>>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
 import {
   EyeOutlined,
   PoweroffOutlined,
   PlusOutlined,
   HomeOutlined,
   CheckCircleTwoTone,
+<<<<<<< HEAD
   DownOutlined,
   FileOutlined
+=======
+>>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
 } from "@ant-design/icons";
 import {useStoreActions, useStoreState} from 'easy-peasy'
 import {Link} from 'react-router-dom'
@@ -17,6 +24,7 @@ const {SubMenu } = Menu;
 
 const SideNav = (props) => {
     const {logout} = useStoreActions(Actions => Actions.auth);
+<<<<<<< HEAD
     const {todos,cards} = useStoreState(State => State.todo)
     const Logout = () => {
         logout()
@@ -37,6 +45,12 @@ const SideNav = (props) => {
       }
     ))
     console.log(data)
+=======
+    const {todos} = useStoreState(State => State.todo)
+    const Logout = () => {
+        logout()
+    }
+>>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
     return (
       <Sider
         breakpoint="lg"
@@ -91,6 +105,7 @@ const SideNav = (props) => {
               }
               
           </SubMenu>
+<<<<<<< HEAD
           <Tree
           style={{marginLeft:20, marginTop:10, marginBottom:3}}
         showLine
@@ -105,10 +120,18 @@ const SideNav = (props) => {
           <Button type="dashed" block style={{position:'absolute', left:0, bottom:0}}>
             <span  style={{marginLeft:"-70px"}}><PlusOutlined /> Add Page</span>
           </Button>          
+=======
+          <Menu.Item onClick={Logout} key="4" icon={<PoweroffOutlined />}>
+            Logout
+          </Menu.Item>
+>>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
         </Menu>
       </Sider>
     );
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
 export default SideNav

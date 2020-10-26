@@ -4,6 +4,7 @@ import {FetchTodoService, UpdateTodoService, DeleteTodoService, CreateTodoServic
 import {item,sessionItem} from '../configs/index'
 const todoModel = {
     todos:[],
+<<<<<<< HEAD
     cards: [
         {   key: 1,
             title: "Learn Hooks",
@@ -17,6 +18,8 @@ const todoModel = {
             tags: [ 'PHP', 'Backend']
         }
     ],
+=======
+>>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
     isLoading: false,
     requestResponse:null,
 

@@ -22,7 +22,15 @@ const Login = (props) => {
 
     useEffect(() => {
       if (requestResponse !== null) {
+<<<<<<< HEAD
         openNotificationWithIcon(requestResponse.type)
+=======
+        if (requestResponse.type === "success") {
+          openNotificationWithIcon('success')
+        } else {
+          openNotificationWithIcon('error')
+        }
+>>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
         setTimeout(() => {
           clearResponse();
         }, 4000);

@@ -8,7 +8,10 @@ export const RegisterService = (credentials) => {
         .catch((error) => error);
 };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
 export const LoginService = (credentials) => {
   const http = new HttpService();
   const loginUrl = "login";
@@ -18,7 +21,10 @@ export const LoginService = (credentials) => {
     .catch((error) => error);
 };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
 export const EmailConfirmationService = (credential) => {
   const http = new HttpService();
   const emailConfirmUrl = "verify-account/"+credential;

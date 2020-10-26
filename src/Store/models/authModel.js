@@ -12,7 +12,11 @@ const authModel = {
 
   login: thunk((Actions, loginData) => {
     Actions.toggleIsLoading();
+<<<<<<< HEAD
    return LoginService(loginData.data)
+=======
+    LoginService(loginData.data)
+>>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
       .then((data) => {
         if (data.status) {
           localStorage.setItem(item,data.data.token)
@@ -24,11 +28,20 @@ const authModel = {
           Actions.updateRequestResponse(newPayload)
           Actions.loginSuccess()
           Actions.toggleIsLoading();  
+<<<<<<< HEAD
           if(data.data.user.isVerified === 0){
             loginData.history.push("/account-verification") 
           }else{
             loginData.history.push("/homepage") 
           }         
+=======
+          if(!data.data.user.isVerified){
+            loginData.history.push("/account-verification") 
+          }else{
+            loginData.history.push("/homepage") 
+          }
+                
+>>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
         }
          else {
             const payload = {
@@ -229,7 +242,11 @@ const authModel = {
   }),
 
   //actions
+<<<<<<< HEAD
   toggleIsLoading : action((state) => {
+=======
+  toggleIsLoading: action((state) => {
+>>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
     state.isLoading = !state.isLoading;
   }),
 
