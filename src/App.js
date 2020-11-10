@@ -13,6 +13,7 @@ import ChangePassword from "./Pages/Auth/changePassword";
 import EmailInfo from "./Pages/Others/emailInfo";
 import Homepage from "./Pages/Protected/homepage";
 import CreateTodo from "./Pages/Protected/createTodo";
+import CreateCard from "./Pages/Protected/createCard";
 import Todo from "./Pages/Protected/viewTodo";
 import { useStoreState } from "easy-peasy";
 
@@ -24,6 +25,7 @@ const App = () => {
         <User exact path="/homepage" isAuthed={isAuth} component={Homepage} />
         <User exact path="/create-todo" isAuthed={isAuth} component={CreateTodo} />
         <User exact path="/view-todo/:todo"  isAuthed={isAuth} component={Todo} />
+        <User exact path="/create-card"  isAuthed={isAuth} component={CreateCard} />
         <Guest exact path="/login" component={Login} />
         <Guest exact path="/register" component={Register} />
         <Guest exact path="/registration-success-notification" component={EmailInfo} />

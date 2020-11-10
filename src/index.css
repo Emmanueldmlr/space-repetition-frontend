@@ -103,14 +103,17 @@ code {
 .signup-form a:hover {
 	text-decoration: underline;
 }
+
 .signup-form .fa {
 	font-size: 21px;
 	position: relative;
 	top: 8px;
 }
+
 .signup-form .fa-paper-plane {
 	font-size: 17px;
 }
+
 .signup-form .fa-check {
 	color: #fff;
 	left: 9px;
@@ -143,14 +146,91 @@ code {
   padding-left: 45%;
   margin-top: 10%;
 }
+
 .content-centralize{
   margin: auto;
   width: 50%;
   margin-top: 10%;
-<<<<<<< HEAD
 }
+
 .ant-tree .ant-tree-treenode{
 	padding: 0 0 20px 0 !important;
-=======
->>>>>>> 97c58ad7a3bd1e5510eb542888089ab60d68573c
+}
+
+.cardTitle{
+	z-index: 1;
+	line-height: 1.25;
+	/* margin-top: 1em; */
+	margin-bottom: 0.5em;
+	background: #f0f2f5;
+	transition: background 100ms ease-in-out 0s;
+	color: rgb(17, 19, 25);
+	-webkit-text-fill-color: rgb(155, 166, 178);
+	font-size: 2.25em;
+	font-weight: 500;
+	outline: none;
+	border: 0px;
+	padding: 0px;
+	resize: none;	
+}
+
+.cardBody{
+	z-index: 1;
+	line-height: 1.25;
+	margin-top: 0.5em;
+	background: #f0f2f5;
+	transition: background 100ms ease-in-out 0s;
+	color: rgb(17, 19, 25);
+	-webkit-text-fill-color: rgb(55, 60, 65);
+	font-size: 1.25em;
+	font-weight: 150;
+	outline: none;
+	border: 0px;
+	padding: 0px;
+	resize: none;	
+}
+
+
+.cardStatus{
+	margin: -12px 0px 10px 0px;
+	font-size: 14px;
+	color: rgb(155, 166, 178);
+    font-size: 13px;
+    white-space: nowrap;
+	overflow: hidden;
+	display: flex;
+    flex: initial;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    min-height: 0px;
+    min-width: 0px;
+}
+
+.ant-select-multiple .ant-select-selection-placeholder{
+	left: 0px !important;
+	-webkit-text-fill-color: rgb(55, 60, 65);
+	font-size: 1.0em;
+	font-weight: 500;
+	cursor: pointer;
+}
+.editorStyle{
+	border: none !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    display: block !important;
+    position: fixed !important; 
+	height: 1px !important; 
+	max-width: 600px !important;
+}
+
+.actionButton{
+	font-size: 18px;
+	padding-right: 10px;
+	 color: grey;
+	 cursor: pointer;
+}
+
+.kxZzJx p{
+	background: #f0f2f5 ;
 }
