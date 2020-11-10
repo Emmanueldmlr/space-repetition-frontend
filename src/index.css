@@ -177,7 +177,6 @@ code {
 .cardBody{
 	z-index: 1;
 	line-height: 1.25;
-	margin-top: 0.5em;
 	background: #f0f2f5;
 	transition: background 100ms ease-in-out 0s;
 	color: rgb(17, 19, 25);
@@ -187,12 +186,13 @@ code {
 	outline: none;
 	border: 0px;
 	padding: 0px;
+	margin-left: -5px!important;
 	resize: none;	
 }
 
 
 .cardStatus{
-	margin: -12px 0px 10px 0px;
+	margin: -12px 0px 2px 0px;
 	font-size: 14px;
 	color: rgb(155, 166, 178);
     font-size: 13px;
@@ -225,10 +225,10 @@ code {
 }
 
 .actionButton{
-	font-size: 18px;
-	padding-right: 10px;
-	 color: grey;
-	 cursor: pointer;
+	font-size: 16px;
+	padding-right: 2px;
+	color: grey;
+	cursor: pointer;
 }
 
 .kxZzJx p{

@@ -1,83 +1,82 @@
 import React, {useState} from "react";
-import debounce from "lodash/debounce";
-import ReactDOM from "react-dom";
-import Editor from "rich-markdown-editor";
 import { Row, Col, Input,Select } from 'antd';
 import {PlusCircleFilled, MinusCircleFilled} from "@ant-design/icons";
 
-
 const { TextArea } = Input;
-const { Option } = Select;
 
 const  CreateCard = () => {
-    const [inputList, setInputList] = useState([{ title: "", body: "", tags:null}]);
-    const [showButton, setShowButton] = useState(false)
+    const [body, setBody] = useState([{content: "", status: false}]);
+    const [title, setTitle] = useState("")
+    const [tags, setTags] = useState([])
 
-    const handleTagChange = (tagValue, i) => {
-      //const { name, value } = e.target;
-      const list = [...inputList];
-      list[i]['tags'] = tagValue;
-      setInputList(list);
-        console.log(`selected ${tagValue}`);
-        console.log(inputList)
+    const handleTitleChange = (e) =>{
+      setTitle(e.target.value)
+      console.log(title)
     }
 
-    const handleInputChange = (e,index) => {
-      const { name, value } = e.target;
-      const list = [...inputList];
-      console.log(name)
-      list[index][name] = value;
-      setInputList(list);
-      console.log(inputList)
+    const handleBodyAdd = () => {
+      setBody([...body, { content: "", status: false }]);
+    };
+
+    const handleBodyRemove = index => {
+       const list = [...body];
+       list.splice(index, 1);
+       setBody(list);
+    };
+
+    const handleBodyChange = (e,index) => {
+        const { name, value } = e.target;
+        const list = [...body];
+        list[index][name] = value;
+        setBody(list);
     }
 
-    const handleSectionRemove = index => {
-      const list = [...inputList];
-      list.splice(index, 1);
-      setInputList(list);
-    };
+    const handleTagChange = (tagValue) => {
+    setTags(tagValue);
+    console.log(`selected ${tagValue}`);
+    console.log(tags)
+    }
 
-    const handleSectionAdd = () => {
-      setInputList([...inputList, { title: "", body: "", tags:null }]);
-    };
-
+    const toggleShowButton = (index) => {
+      const list = [...body];
+      list[index]['status'] = !list[index]['status']
+      setBody(list)
+    }
 
 return (
     <>       
         {
-          inputList.map((x,i) => (
-            <Row justify="center" style={{marginBottom: '25px'}} onMouseLeave={() => setShowButton(false)} onMouseEnter={() => setShowButton(true)}>
-                <Col span={1} style={{marginTop:'0.7em'}}>
-                    {
-                      showButton ? 
-                        <div>
-                          <PlusCircleFilled onClick={handleSectionAdd} className='actionButton' /> 
-                          {
-                            inputList.length > 1 && <MinusCircleFilled onClick={()=> handleSectionRemove(i)} className='actionButton'/> 
-                          }        
-                        
-                        </div> 
-                        :
-                        null
-                    }       
-                </Col>
+            <Row justify="center">
                 <Col span={14}>
-
-                        <TextArea className='cardTitle'   style={{
-                            overflow:'hidden', overflowWrap:'break-word', height:45
-                        }} maxLength={100} name='title' value={x.title} onChange={(e)=>handleInputChange(e,i)} placeholder='Start with a title...' bordered={false} />
-                        
-                        <span className='cardStatus'> You Saved 10 minutes ago </span>          
-                        
-                        <TextArea className='cardBody' autoSize rows={2} style={{
-                             height:50
-                        }}  value={x.body} name='body' onChange={(e)=>handleInputChange(e,i)} placeholder='Great things start here...' bordered={false} />
-                        
-                        <Select className='cardTag'  mode="tags" placeholder='Add Tags' bordered={false} style={{ width: '100%' }} onChange={(value)=>handleTagChange(value,i)} tokenSeparators={[',']}>
-                        </Select>
-                </Col>  
+                  <span className='cardStatus'> You Saved 10 minutes ago </span>  
+                  <TextArea className='cardTitle'   style={{
+                    overflow:'hidden', overflowWrap:'break-word', height:45
+                  }} maxLength={100} name='title' value={title} onChange={(e)=>handleTitleChange(e) }  placeholder='Start with a title...' bordered={false} />
+                  {
+                    body.map((x,i) => (
+                      <Row style={{marginLeft:'-48px'}} onMouseLeave={() => toggleShowButton(i)} onMouseEnter={() => toggleShowButton(i)}>
+                      <Col span={2}  >
+                        {
+                          x.status &&
+                          <div>
+                            <PlusCircleFilled onClick={handleBodyAdd} className='actionButton' /> 
+                            {
+                               body.length > 1 && <MinusCircleFilled onClick={()=> handleBodyRemove(i)} className='actionButton'/> 
+                            }  
+                          </div>
+                        }       
+                      </Col>
+                      <Col span={14}>
+                        <TextArea className='cardBody' autoSize rows={2} style={{height:50}} 
+                        name='content' value={x.content} onChange={(e) => handleBodyChange(e,i)}  placeholder='Great things start here...' bordered={false} />
+                      </Col>
+                    </Row>
+                    ))
+                  }
+                  <Select className='cardTag' onChange={handleTagChange}  mode="tags" placeholder='Add Tags' bordered={false} style={{ width: '100%' }}  tokenSeparators={[',']}>
+                  </Select>
+                </Col>
             </Row>
-          ))
         }
     </>
 );
