@@ -15,8 +15,6 @@ const  CreateCard = () => {
       const list = [...inputList];
       list[i]['tags'] = tagValue;
       setInputList(list);
-        console.log(`selected ${tagValue}`);
-        console.log(inputList)
     }
 
     const toggleShowButton = (index) => {
@@ -30,7 +28,6 @@ const  CreateCard = () => {
       const list = [...inputList];
       list[index][name] = value;
       setInputList(list);
-      console.log(inputList)
     }
 
     const handleSectionRemove = index => {
@@ -47,7 +44,6 @@ const  CreateCard = () => {
       const list = [...inputList];
       list[focus]['body'] = text;
       setInputList(list);
-      console.log(inputList)
     },10);
 
     const handleFocus = (index) => {
@@ -92,9 +88,6 @@ return (
                           }}
                           autoFocus
                       />
-                        {/* <TextArea className='cardBody' autoSize rows={2} style={{
-                            height:50
-                        }}  value={x.body} name='body' onChange={(e)=>handleInputChange(e,i)} placeholder='Great things start here...' bordered={false} /> */}
                       </Col>
                     </Row>                    
                     <Select className='cardTag'  mode="tags" placeholder='Add Tags' bordered={false} style={{ width: '100%' }} onChange={(value)=>handleTagChange(value,i)} tokenSeparators={[',']}>
@@ -105,26 +98,6 @@ return (
           </Col>  
       </Row>
     </>
-    // <>
-    //     <Row>
-    //         <Col span={14} offset={4}>
-    //             <div style={{marginTop:20}}>
-    //                 <Editor
-    //                     className='editorStyle'
-    //                     readOnly={false}
-    //                     readOnlyWriteCheckboxes
-    //                     value={value}
-    //                     template={false}
-    //                     defaultValue=""
-    //                     scrollTo={window.location.hash}
-    //                     onSave={options => console.log("Save triggered", options)}
-    //                     onChange={handleChange}
-    //                     autoFocus
-    //                 />
-    //             </div>
-    //         </Col>
-    //      </Row>
-    // </>
 );
 }
 
