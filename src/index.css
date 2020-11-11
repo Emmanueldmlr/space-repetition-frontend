@@ -186,7 +186,7 @@ code {
 	outline: none;
 	border: 0px;
 	padding: 0px;
-	margin-left: -5px!important;
+	margin-left: -8px!important;
 	resize: none;	
 }
 
@@ -222,6 +222,7 @@ code {
     position: fixed !important; 
 	height: 1px !important; 
 	max-width: 600px !important;
+	margin-bottom: 00px;
 }
 
 .actionButton{
@@ -231,6 +232,10 @@ code {
 	cursor: pointer;
 }
 
-.kxZzJx p{
-	background: #f0f2f5 ;
+.kxZzJx p {
+	background: rgb(240 242 245 / 1);
+}
+
+.block-menu-trigger{
+	display: none!important;
 }
