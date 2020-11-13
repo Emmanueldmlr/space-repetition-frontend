@@ -20,10 +20,12 @@ const  CreateCard = () => {
     }
 
     const [inputList, setInputList] = useState([{ uuid: generateToken(), title: "", body: "", tags:null, status: false}]);
+   
     const handleTagChange = (tagValue, i) => {
       const list = [...inputList];
       list[i]['tags'] = tagValue;
       setInputList(list);
+      createPayload('tags', list[i])
     }
 
     const toggleShowButton = (index) => {
@@ -37,7 +39,15 @@ const  CreateCard = () => {
       const list = [...inputList];
       list[index][name] = value;
       setInputList(list);
-      updateCardInput(list[index])
+      createPayload('title', list[index])
+    }
+
+    const createPayload = (name, load) => {
+      const payload = {
+        name: name,
+        load:load
+      }
+      updateCardInput(payload)
     }
 
     const handleSectionRemove = index => {
@@ -55,6 +65,7 @@ const  CreateCard = () => {
       const list = [...inputList];
       list[focus]['body'] = text;
       setInputList(list);
+      createPayload('body', list[focus])
     },10);
 
     const handleFocus = (index) => {

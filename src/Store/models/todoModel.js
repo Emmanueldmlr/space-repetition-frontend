@@ -5,18 +5,21 @@ import {item,sessionItem} from '../configs/index'
 const todoModel = {
     todos:[],
     cards: [
+
         {   
             uuid: '2hwkhwiu27862722',
             title: "Learn Hooksjifodioddiodio",
             body: "Hooks are used in a functional components and work just like the life cycle methods in a class component",
             tags: [ 'React', 'Hooks'],
         },
+
         {
             uuid: 'jkhjkd82789299823',
             title: "Learn jkfjjfdjkdfdPHP intejkkd",
             body: "Hooks are used in a functional components and work just like the life cycle methods in a class component",
             tags: [ 'React', 'PHP'],
         }
+
     ],
     isLoading: false,
     requestResponse:null,
@@ -176,12 +179,19 @@ const todoModel = {
     }),
 
     updateCardInput: action((state, payload) => {
-        const index = state.cards.findIndex(card => card.uuid ===payload.uuid);
-       const list =  [...state.cards]
-       list[index]['title'] = payload.title;
-       state.cards = list
+        const index = state.cards.findIndex(card => card.uuid ===payload.load.uuid);
+        const list =  [...state.cards]
+        if(payload.name == 'title'){
+            list[index][payload.name] = payload.load.title;
+        } 
+        else if( payload.name == 'body'){
+            list[index][payload.name] = payload.load.body;
+        }
+        else{
+            list[index][payload.name] = payload.load.tags;
+        }
+        state.cards = list
     })
-
 }
 
 export default todoModel;
