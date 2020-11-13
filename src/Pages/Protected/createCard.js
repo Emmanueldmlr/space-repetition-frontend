@@ -1,16 +1,25 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import debounce from "lodash/debounce";
 import Editor from "rich-markdown-editor";
 import { Row, Col, Input,Select } from 'antd';
 import {PlusCircleFilled, MinusCircleFilled} from "@ant-design/icons";
+import {useStoreActions} from 'easy-peasy';
+import {v4 as uuidv4 } from 'uuid';
 const { TextArea } = Input;
+
 
 
 
 const  CreateCard = () => {
     const [value,setValue] = useState(undefined)
     const [focus, setFocus] = useState(null)
-    const [inputList, setInputList] = useState([{ title: "", body: "", tags:null, status: false}]);
+    const {addCard,updateCardInput} = useStoreActions(Actions => Actions.todo)
+
+    const generateToken = () => {
+      return uuidv4();
+    }
+
+    const [inputList, setInputList] = useState([{ uuid: generateToken(), title: "", body: "", tags:null, status: false}]);
     const handleTagChange = (tagValue, i) => {
       const list = [...inputList];
       list[i]['tags'] = tagValue;
@@ -28,6 +37,7 @@ const  CreateCard = () => {
       const list = [...inputList];
       list[index][name] = value;
       setInputList(list);
+      updateCardInput(list[index])
     }
 
     const handleSectionRemove = index => {
@@ -39,6 +49,7 @@ const  CreateCard = () => {
     const handleSectionAdd = () => {
       setInputList([...inputList, { title: "", body: "", tags:null, status:false }]);
     };
+
     const handleChange = debounce(textValue => {
       const text = textValue();
       const list = [...inputList];
@@ -49,6 +60,13 @@ const  CreateCard = () => {
     const handleFocus = (index) => {
       setFocus(index)
     }
+
+    useEffect(() => {
+      addCard(inputList);
+      // return () => {
+      //   cleanup
+      // }
+    }, [])
 
 return (
     <>        

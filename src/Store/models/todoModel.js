@@ -1,20 +1,21 @@
-import { action, thunk } from "easy-peasy";
+import { action, debug, thunk } from "easy-peasy";
 import {FetchTodoService, UpdateTodoService, DeleteTodoService, CreateTodoService
 } from '../services/todoService'
 import {item,sessionItem} from '../configs/index'
 const todoModel = {
     todos:[],
     cards: [
-        {   key: 1,
-            title: "Learn Hooks",
+        {   
+            uuid: '2hwkhwiu27862722',
+            title: "Learn Hooksjifodioddiodio",
             body: "Hooks are used in a functional components and work just like the life cycle methods in a class component",
-            tags: [ 'React', 'Hooks']
+            tags: [ 'React', 'Hooks'],
         },
         {
-            key: 2,
-            title: "Learn PHP",
-            body: "PHP is a backend language for web",
-            tags: [ 'PHP', 'Backend']
+            uuid: 'jkhjkd82789299823',
+            title: "Learn jkfjjfdjkdfdPHP intejkkd",
+            body: "Hooks are used in a functional components and work just like the life cycle methods in a class component",
+            tags: [ 'React', 'PHP'],
         }
     ],
     isLoading: false,
@@ -169,6 +170,17 @@ const todoModel = {
     fetchSuccess: action((state, payload)=> {
         state.todos = payload;
     }),
+
+    addCard: action((state, payload)=>{
+        state.cards = [...state.cards, ...payload];
+    }),
+
+    updateCardInput: action((state, payload) => {
+        const index = state.cards.findIndex(card => card.uuid ===payload.uuid);
+       const list =  [...state.cards]
+       list[index]['title'] = payload.title;
+       state.cards = list
+    })
 
 }
 

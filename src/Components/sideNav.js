@@ -20,22 +20,27 @@ const SideNav = (props) => {
     const Logout = () => {
         logout()
     }
+
     const onSelect = (selectedKeys, info) => {
       console.log('selected', selectedKeys, info);
     };
+
+    const truncate = (str) => {
+      if(str == null ) return str
+      return str.length > 10 ? str.substring(0, 15) : str;
+    }
     const data = cards.map(card => (
       {
-        title: card.title,
-        key: card.key,
+        title: truncate(card.title),
+        key: card.uuid,
         children: [
           {
-            title: 'No Pages Inside',
+            title: truncate(card.body),
             key: '0-0-0-0',
           },
         ],
       }
     ))
-    console.log(data)
     return (
       <Sider
         breakpoint="lg"
