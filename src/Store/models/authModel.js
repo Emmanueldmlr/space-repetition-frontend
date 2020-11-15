@@ -12,7 +12,7 @@ const authModel = {
 
   login: thunk((Actions, loginData) => {
     Actions.toggleIsLoading();
-   return LoginService(loginData.data)
+    return LoginService(loginData.data)
       .then((data) => {
         if (data.status) {
           localStorage.setItem(item,data.data.token)

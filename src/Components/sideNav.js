@@ -16,7 +16,9 @@ const {SubMenu } = Menu;
 
 const SideNav = (props) => {
     const {logout} = useStoreActions(Actions => Actions.auth);
-    const {todos,cards} = useStoreState(State => State.todo)
+    const todos = useStoreState(State => State.todo.todos)
+    const cards = useStoreState(State => State.card.cards)
+
     const Logout = () => {
         logout()
     }
@@ -31,7 +33,7 @@ const SideNav = (props) => {
     }
     const data = cards.map(card => (
       {
-        title: truncate(card.title),
+        title: card.title !== null ? truncate(card.title) : "Untitled",
         key: card.uuid,
         children: [
           {
@@ -97,18 +99,18 @@ const SideNav = (props) => {
           </SubMenu>
           <Tree
           style={{marginLeft:20, marginTop:10, marginBottom:3}}
-        showLine
-        switcherIcon={<DownOutlined />}
-        defaultExpandedKeys={['0-0-0']}
-        onSelect={onSelect}
-        treeData={data}
+          showLine
+          switcherIcon={<DownOutlined />}
+          defaultExpandedKeys={['0-0-0']}
+          onSelect={onSelect}
+          treeData={data}
       />
           <Menu.Item onClick={Logout} key="4" icon={<PoweroffOutlined />}>
             Logout
           </Menu.Item>
           <Button type="dashed" block style={{position:'absolute', left:0, bottom:0}}>
             <Link to='/create-card'>
-            <span  style={{marginLeft:"-70px"}}><PlusOutlined /> Add Page</span>
+               <span  style={{marginLeft:"-70px"}}><PlusOutlined /> Add Page</span>
             </Link>
           </Button>          
         </Menu>

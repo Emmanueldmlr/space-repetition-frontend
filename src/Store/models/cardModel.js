@@ -1,19 +1,20 @@
 import { action, debug, thunk } from "easy-peasy";
-import {FetchTodoService, UpdateTodoService, DeleteTodoService, CreateTodoService
-} from '../services/todoService'
+import {FetchCardService, UpdateTodoService, DeleteTodoService, CreateTodoService
+} from '../services/cardService'
 import {item,sessionItem} from '../configs/index'
-const todoModel = {
-    todos:[],
+
+const cardModel = {
+    cards: [],
     isLoading: false,
     requestResponse:null,
 
-    fetchTodos: thunk((Actions, nill,helpers) => {
+    fetchCards: thunk((Actions, nill,helpers) => {
         const authActions = helpers.getStoreActions(Action => Action)
         Actions.toggleIsLoading();
-        FetchTodoService()
+        FetchCardService()
           .then((data) => {
             if(data.status === 200){
-                Actions.fetchSuccess(data.data.todos)
+                Actions.fetchSuccess(data.data.cards)
                 Actions.toggleIsLoading(); 
                 return
             }
@@ -112,6 +113,7 @@ const todoModel = {
 
         CreateTodoService(formData)
           .then((data) => {
+            console.log("data" + data)
             if(data.status === 200){
                 Actions.fetchSuccess(data.data.todo)
                 const payload = {
@@ -140,7 +142,7 @@ const todoModel = {
       }),
    
 
-    //actions
+        //actions
     toggleIsLoading: action((state) => {
         state.isLoading = !state.isLoading;
     }),
@@ -154,8 +156,28 @@ const todoModel = {
     }),
 
     fetchSuccess: action((state, payload)=> {
-        state.todos = payload;
+        state.cards = payload;
     }),
+
+    addCard: action((state, payload)=>{
+        state.cards = [...state.cards, ...payload];
+    }),
+
+    updateCardInput: action((state, payload) => {
+        const index = state.cards.findIndex(card => card.uuid ===payload.load.uuid);
+        const list =  [...state.cards]
+        if(payload.name == 'title'){
+            list[index][payload.name] = payload.load.title;
+        } 
+        else if( payload.name == 'body'){
+            list[index][payload.name] = payload.load.body;
+        }
+        else{
+            list[index][payload.name] = payload.load.tags;
+        }
+        state.cards = list
+        console.log(state.cards)
+    })
 }
 
-export default todoModel;
+export default cardModel;

@@ -8,6 +8,7 @@ const { Header, Content} = Layout;
 
 const Extend = (props) =>{
     const {fetchTodos}  = useStoreActions(Actions => Actions.todo);
+    const {fetchCards} = useStoreActions(Actions => Actions.card)
     const user = JSON.parse(sessionStorage.getItem(sessionItem));
     if(!user){
       props.children.props.history.push('/login')
@@ -19,6 +20,7 @@ const Extend = (props) =>{
     }
     useEffect(() => {
       fetchTodos()
+      fetchCards()
     }, [])
     return (
       <Layout>
