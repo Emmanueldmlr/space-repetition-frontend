@@ -22,10 +22,11 @@ export const DeleteTodoService = (id) => {
         .then((data) => data)
         .catch((error) => error);
 };
-export const CreateTodoService = (payload) => {
+
+export const CreateCardService = () => {
   const http = new HttpService();
-  const createUrl = "todos";
-  return http.postData(payload,createUrl)
+  const createUrl = "cards";
+  return http.postData([],createUrl)
     .then((data) => data)
     .catch((error) => error);
 };

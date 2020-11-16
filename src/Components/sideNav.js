@@ -16,6 +16,7 @@ const {SubMenu } = Menu;
 
 const SideNav = (props) => {
     const {logout} = useStoreActions(Actions => Actions.auth);
+    const {createCard} = useStoreActions(Actions => Actions.card);
     const todos = useStoreState(State => State.todo.todos)
     const cards = useStoreState(State => State.card.cards)
 
@@ -31,6 +32,7 @@ const SideNav = (props) => {
       if(str == null ) return str
       return str.length > 10 ? str.substring(0, 15) : str;
     }
+
     const data = cards.map(card => (
       {
         title: card.title !== null ? truncate(card.title) : "Untitled",
@@ -43,6 +45,12 @@ const SideNav = (props) => {
         ],
       }
     ))
+
+    const handleCreateCard = () => {
+      const history = props.prop.children.props
+      createCard(history)
+    }
+
     return (
       <Sider
         breakpoint="lg"
@@ -108,10 +116,8 @@ const SideNav = (props) => {
           <Menu.Item onClick={Logout} key="4" icon={<PoweroffOutlined />}>
             Logout
           </Menu.Item>
-          <Button type="dashed" block style={{position:'absolute', left:0, bottom:0}}>
-            <Link to='/create-card'>
-               <span  style={{marginLeft:"-70px"}}><PlusOutlined /> Add Page</span>
-            </Link>
+          <Button type="dashed" onClick={handleCreateCard} block style={{position:'absolute', left:0, bottom:0}}>   
+              <span  style={{marginLeft:"-70px"}}><PlusOutlined /> Add Card</span>
           </Button>          
         </Menu>
       </Sider>

@@ -5,21 +5,25 @@ import { Row, Col, Input,Select } from 'antd';
 import {PlusCircleFilled, MinusCircleFilled} from "@ant-design/icons";
 import {useStoreActions} from 'easy-peasy';
 import {v4 as uuidv4 } from 'uuid';
+import {CreateCardService} from '../../Store/services/cardService'
 const { TextArea } = Input;
 
 
 
 
-const  CreateCard = () => {
+const  CreateCard = (props) => {
+    if(!props.location.state){
+      props.history.push('/homepage')
+    }
+    const data = props.location.state.data
     const [value,setValue] = useState(undefined)
     const [focus, setFocus] = useState(null)
-    const {addCard,updateCardInput} = useStoreActions(Actions => Actions.todo)
-
+    const {addCard,updateCardInput} = useStoreActions(Actions => Actions.card)
     const generateToken = () => {
       return uuidv4();
     }
 
-    const [inputList, setInputList] = useState([{ uuid: generateToken(), title: "", body: "", tags:null, status: false}]);
+    const [inputList, setInputList] = useState([data]);
    
     const handleTagChange = (tagValue, i) => {
       const list = [...inputList];
@@ -55,10 +59,19 @@ const  CreateCard = () => {
       list.splice(index, 1);
       setInputList(list);
     };
-
+    
     const handleSectionAdd = () => {
-      setInputList([...inputList, { title: "", body: "", tags:null, status:false }]);
-    };
+      CreateCardService()
+        .then(data => {
+          const result = data.data.card
+          const payload = {uuid: result.uuid,title: result.title,body:  result.body,tags:  result.tags,status: false }
+          addCard([payload])
+          setInputList([...inputList, payload]);
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
 
     const handleChange = debounce(textValue => {
       const text = textValue();
@@ -73,7 +86,7 @@ const  CreateCard = () => {
     }
 
     useEffect(() => {
-      addCard(inputList);
+      //addCard(inputList);
       // return () => {
       //   cleanup
       // }

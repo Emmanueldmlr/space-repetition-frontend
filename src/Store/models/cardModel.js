@@ -1,5 +1,5 @@
 import { action, debug, thunk } from "easy-peasy";
-import {FetchCardService, UpdateTodoService, DeleteTodoService, CreateTodoService
+import {FetchCardService, UpdateTodoService, DeleteTodoService, CreateCardService
 } from '../services/cardService'
 import {item,sessionItem} from '../configs/index'
 
@@ -14,7 +14,7 @@ const cardModel = {
         FetchCardService()
           .then((data) => {
             if(data.status === 200){
-                Actions.fetchSuccess(data.data.cards)
+                Actions.addCard(data.data.cards)
                 Actions.toggleIsLoading(); 
                 return
             }
@@ -89,46 +89,33 @@ const cardModel = {
           })
       }),
 
-    addTodo: thunk((Actions, formData,helpers) => {
+    createCard: thunk((Actions, history = null ,helpers) => {
         Actions.toggleIsLoading();
         const authActions = helpers.getStoreActions(Action => Action)
-        if(formData.title ===''){
-            const payload = {
-                type: "error",
-                msg: "Title Field is Required",
-            };
-            Actions.updateRequestResponse(payload);
-            Actions.toggleIsLoading();
-            return
-        }
-        if(formData.subTodo.length < 1){
-            const payload = {
-                type: "error",
-                msg: "You need at Least One Todo to Submit Form",
-            };
-            Actions.updateRequestResponse(payload);
-            Actions.toggleIsLoading();
-            return
-        }
-
-        CreateTodoService(formData)
+        CreateCardService()
           .then((data) => {
-            console.log("data" + data)
             if(data.status === 200){
-                Actions.fetchSuccess(data.data.todo)
+                const result = data.data.card
                 const payload = {
-                    type: "success",
-                    msg: data.data.message,
-                };
-                Actions.updateRequestResponse(payload);
+                    uuid: result.uuid,
+                    title: result.title,
+                    body:  result.body,
+                    tags:  result.tags,
+                    status: false
+                }
+                Actions.addCard([payload])
+                history.history.push({
+                    pathname: '/create-card/'.concat(result.uuid),
+                    state: {
+                        data: payload,
+                    },
+                })
                 Actions.toggleIsLoading(); 
-             
             }
             else if(data.status === 401){
                 localStorage.removeItem(item)
                 sessionStorage.removeItem(sessionItem)
                 authActions.auth.logout()
-               
             }
             else{
                 const payload = {
@@ -153,10 +140,6 @@ const cardModel = {
 
     clearResponse: action((state) => {
         state.requestResponse = null;
-    }),
-
-    fetchSuccess: action((state, payload)=> {
-        state.cards = payload;
     }),
 
     addCard: action((state, payload)=>{

@@ -24,7 +24,7 @@ const Extend = (props) =>{
     }, [])
     return (
       <Layout>
-        <SideNav/>
+        <SideNav prop={props} />
         <Layout>
           <Header
             className="site-layout-sub-header-background"
